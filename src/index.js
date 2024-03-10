@@ -104,21 +104,7 @@ function main() {
   });
 }
 
-// main();
-
-function findTicketPrice(email) {
-  let hasNumber = false;
-
-  email.split("").forEach((char) => {
-    if (!isNaN(Number(char))) {
-      hasNumber = true;
-    }
-  });
-
-  return hasNumber;
-}
-
-console.log(findTicketPrice("asd"));
+main();
 
 function addPokemon(key, name, level) {
   const newpokemon = {
