@@ -66,7 +66,7 @@ const character = {
   level: 4,
   canWalk: true,
   useSkill: function () {
-    return "Throw Fire abc";
+    return "Throw Fire 123";
   },
   face: {
     ears: 2,
