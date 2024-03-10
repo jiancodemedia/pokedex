@@ -1,5 +1,15 @@
 import readline from "readline";
-import { multiply } from "./index1.js";
+import {
+  pokedex,
+  findPokemon,
+  findName,
+  findAllLevel,
+  deletePokemon,
+  addPokemon,
+  renamePokemon,
+  changeLevel,
+  addColour
+} from "./pokedex.js";
 
 const reader = readline.createInterface({
   input: process.stdin,
@@ -10,45 +20,26 @@ const askQuestion = (question, callback) => {
   reader.question(question, callback);
 };
 
-const pokedex = {
-  chamander: {
-    name: "chamander",
-    level: 5,
-  },
-  chamaleon: {
-    name: "chamaleon",
-    level: 10,
-  },
-  chalizard: {
-    name: "chalizard",
-    level: 10,
-  },
-  pichu: {
-    name: "pichu",
-    level: 3,
-  },
-  pikachu: {
-    name: "pikachu",
-    level: 13,
-  },
-  raychu: {
-    name: "raychu",
-    level: 18,
-  },
-};
-
 const options = `
 Select an option:
+  0. Show pokedex
   1. Find Pokemon with key.
   2. Find all Pokemon with name.
   3. Find Pokemon with level
   4. Delete a pokemon
   5. Add a pokemon
+  6. Change pokemon name
+  7. Change pokemon level
+  8. Add pokemon colour
 `;
 
 function main() {
   askQuestion(options, (option) => {
     switch (option) {
+      case "0":
+        console.log(pokedex);
+        main();
+        break;
       case "1":
         askQuestion("Please enter Pokemon key: ", (key) => {
           const pokemon = findPokemon(key);
@@ -89,13 +80,36 @@ function main() {
             });
           });
         });
+        break;
 
-        // askQuestion("Add Pokemon: ", (pokemon) => {
-        //   const [key, name, level] = pokemon.split(" ");
-        //   addPokemon(key, name, Number(level));
-        //   console.log(pokedex);
-        //   main();
-        // });
+      case "6":
+        askQuestion("Rename a Pokemon: ", (key) => {
+          askQuestion("Write new name: ", (name) => {
+            renamePokemon(key, name);
+            console.log(pokedex);
+            main();
+          });
+        });
+        break;
+
+      case "7":
+        askQuestion("Change pokemon level: ", (key) => {
+          askQuestion("New level: ", (level) => {
+            changeLevel(key, level);
+            console.log(pokedex);
+            main();
+          });
+        });
+        break
+
+        case '8': 
+        askQuestion('Add pokemon colour: ', (key) => {
+          askQuestion('What colour: ', (colour) => {
+            addColour(key, colour)
+            console.log(pokedex)
+            main()
+          })
+        })
         break;
       default:
         main();
@@ -105,103 +119,3 @@ function main() {
 }
 
 main();
-
-function addPokemon(key, name, level) {
-  const newpokemon = {
-    name: name,
-    level: level,
-  };
-  pokedex[key] = newpokemon;
-}
-// addPokemon("eve", "eve", 11);
-// addPokemon("pigeon", "pigeon", 13);
-
-function deletePokemon(key) {
-  delete pokedex[key];
-}
-// deletePokemon('pikachu')
-// console.log(pokedex)
-
-function findPokemon(key) {
-  const pokemon = pokedex[key];
-  return pokemon;
-}
-
-function findName(name) {
-  const pokemons = Object.values(pokedex);
-
-  return pokemons.filter((pokemon) => {
-    return pokemon.name === name;
-  });
-}
-
-// function findLevel(level) {
-//   const pokemons = Object.values(pokedex);
-//   let foundLevel;
-//   pokemons.forEach((pokeLevel) => {
-//     if (pokeLevel.level === level) {
-//       foundLevel = pokeLevel;
-//     }
-//   });
-//   return foundLevel;
-// }
-function findAllLevel(level) {
-  const pokemons = Object.values(pokedex);
-  let foundLevel = [];
-  pokemons.forEach((pokeLevel) => {
-    if (pokeLevel.level === level) {
-      foundLevel.push(pokeLevel);
-    }
-  });
-  return foundLevel;
-}
-// function findName(name) {
-//   const pokemons = Object.values(pokedex);
-//   let foundPokemon = [];
-//   pokemons.forEach((pokemon) => {
-//     if (pokemon.name === name) {
-//       foundPokemon = pokemon;
-//     }
-//   });
-//   return foundPokemon;
-// }
-// console.log(findName("chamander"));
-
-// function findName(name) {
-//   const pokemons = Object.values(pokedex);
-//   let foundPokemon = [];
-//   pokemons.forEach((pokemon) => {
-//     if (pokemon.name === name) {
-//       foundPokemon.push(pokemon);
-//     }
-//   });
-//   return foundPokemon;
-// }
-// console.log(findName("chamander"));
-
-//   console.log(findLevel(13))
-
-// console.log(findLevel(10));
-
-// function renamePokemon(key, name) {
-//  pokedex[key][name] = name;
-//  pokedex.pikachu.pika = 'pika'
-
-//   pokedex[key].name= name;
-//   pokedex.pikachu.name = name;
-// }
-// renamePokemon('pikachu', 'pika')
-// console.log(pokedex)
-
-// function addColour(key, colour) {
-//   pokedex[key].colour = colour;
-// }
-// addColour("pikachu", "yellow");
-// console.log(pokedex);
-
-// function changeLevel(key, level) {
-//   pokedex[key].level = level
-// }
-//  changeLevel('raychu', 30)
-
-// console.log(pokedex)
